@@ -1,0 +1,13 @@
+customer_id,age,tenure_months,monthly_charges,contract_type,support_calls,churn
+C001,34,12,65.5,month-to-month,3,1
+C002,45,36,89.9,two-year,0,0
+C003,23,3,45.0,month-to-month,5,1
+C004,51,48,75.3,one-year,1,0
+C005,29,6,55.0,month-to-month,2,1
+C006,62,60,95.2,two-year,0,0
+C007,38,18,68.7,one-year,1,0
+C008,27,2,42.5,month-to-month,4,1
+C009,55,24,82.1,one-year,0,0
+C010,41,15,60.0,month-to-month,2,0
+C011,33,9,58.3,month-to-month,3,1
+C012,48,42,78.9,two-year,1,0
