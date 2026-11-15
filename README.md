@@ -8,4 +8,4 @@
 - data-quality : controle de qualite des donnees (check_quality), lance ValueError si churn ou contract_type est absente [@s-7a9](https://github.com/s-7a9)
 - train-test-split : decoupage train/test reproductible (seed fixe, colonne cible churn) [@walidblack](https://github.com/walidblack)
 - model-training : entrainement d'un modele de classification (random forest ou regression logistique) [@laarw](https://github.com/laarw)
-
+- evaluation-metrics : evaluation du modele sur le jeu de test (accuracy, precision, recall, F1) [@chajdymountasser](https://github.com/chajdymountasser)
