@@ -20,4 +20,5 @@ def split_data(df, target="churn", test_size=0.2, seed=42):
 
     X = df.drop(columns=[target])
     y = df[target]
-    return train_test_split(X, y, test_size=test_size, random_state=seed)
+    
+    return train_test_split(X, y, test_size=test_size, random_state=seed, stratify=y)
