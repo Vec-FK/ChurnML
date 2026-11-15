@@ -50,3 +50,16 @@ def test_split_sur_le_sample():
     assert len(X_test) == 3
     assert len(y_train) == 9
     assert len(y_test) == 3
+    
+    
+def test_split_is_stratified():
+    X_train, X_test, y_train, y_test = split_data(make_df(), test_size=0.2)
+    assert y_test.sum() == 1
+    assert y_train.sum() == 4
+
+
+def test_split_stratified_sur_le_sample():
+    df = load_data(SAMPLE)
+    _, _, y_train, y_test = split_data(df, test_size=0.25)
+    assert set(y_train.unique()) == {0, 1}
+    assert set(y_test.unique()) == {0, 1}
