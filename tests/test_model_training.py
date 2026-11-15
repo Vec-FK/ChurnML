@@ -1,9 +1,16 @@
 """Tests unitaires de la feature model-training."""
 
+from pathlib import Path
+
 import pandas as pd
 import pytest
 
+from src.data_loading import load_data
+from src.feature_engineering import transform
 from src.model_training import train
+from src.train_test_split import split_data
+
+SAMPLE = Path(__file__).resolve().parents[1] / "data" / "sample" / "churn_sample.csv"
 
 
 def make_data():
@@ -59,3 +66,20 @@ def test_non_numeric_column_raises():
     X["contract_type"] = "month-to-month"
     with pytest.raises(ValueError):
         train(X, y)
+
+
+def test_pipeline_transform_split_train_sur_le_sample():
+    df = transform(load_data(SAMPLE))
+    df = df.drop(columns=["customer_id", "contract_type"])
+    X_train, X_test, y_train, y_test = split_data(df, test_size=0.25)
+    model = train(X_train, y_train)
+    preds = model.predict(X_test)
+    assert len(preds) == len(y_test)
+    assert set(preds) <= {0, 1}
+
+
+def test_train_refuse_les_colonnes_texte_de_transform():
+    df = transform(load_data(SAMPLE))
+    X = df.drop(columns=["churn"])
+    with pytest.raises(ValueError):
+        train(X, df["churn"])
