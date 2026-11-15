@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pandas as pd
+import pytest
 
 from src.data_quality import check_quality
 
@@ -56,10 +57,21 @@ def test_empty_dataframe():
     assert result["invalid_contract"] == 0
 
 
-def test_missing_columns_count_all_rows_invalid():
-    result = check_quality(pd.DataFrame({"customer_id": [1, 2, 3]}))
-    assert result["invalid_churn"] == 3
-    assert result["invalid_contract"] == 3
+def test_missing_churn_column_raises():
+    df = pd.DataFrame({"contract_type": ["one-year", "two-year"]})
+    with pytest.raises(ValueError, match="churn"):
+        check_quality(df)
+
+
+def test_missing_contract_type_column_raises():
+    df = pd.DataFrame({"churn": [0, 1]})
+    with pytest.raises(ValueError, match="contract_type"):
+        check_quality(df)
+
+
+def test_missing_both_columns_raises():
+    with pytest.raises(ValueError, match="churn.*contract_type"):
+        check_quality(pd.DataFrame({"customer_id": [1, 2, 3]}))
 
 
 def test_sample_file_is_clean():

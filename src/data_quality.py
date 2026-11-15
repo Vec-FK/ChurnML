@@ -5,6 +5,7 @@ lignes, doublons, valeurs manquantes par colonne, et valeurs invalides pour
 les colonnes `churn` et `contract_type`. Le module ne dépend que de pandas.
 """
 
+REQUIRED_COLUMNS = ("churn", "contract_type")
 VALID_CONTRACTS = {"month-to-month", "one-year", "two-year"}
 
 
@@ -19,25 +20,16 @@ def check_quality(df):
       compte comme invalide) ;
     - invalid_contract : lignes où contract_type n'est pas dans VALID_CONTRACTS.
 
-    Si la colonne churn ou contract_type est absente, toutes les lignes sont
-    comptées comme invalides pour cette colonne.
+    Lève ValueError si une des colonnes de REQUIRED_COLUMNS est absente.
     """
-    n_rows = int(len(df))
-
-    if "churn" in df.columns:
-        invalid_churn = int((~df["churn"].isin([0, 1])).sum())
-    else:
-        invalid_churn = n_rows
-
-    if "contract_type" in df.columns:
-        invalid_contract = int((~df["contract_type"].isin(VALID_CONTRACTS)).sum())
-    else:
-        invalid_contract = n_rows
+    absent = [col for col in REQUIRED_COLUMNS if col not in df.columns]
+    if absent:
+        raise ValueError(f"Missing required column(s): {absent}")
 
     return {
-        "n_rows": n_rows,
+        "n_rows": int(len(df)),
         "n_duplicates": int(df.duplicated().sum()),
         "missing": {col: int(n) for col, n in df.isna().sum().items()},
-        "invalid_churn": invalid_churn,
-        "invalid_contract": invalid_contract,
+        "invalid_churn": int((~df["churn"].isin([0, 1])).sum()),
+        "invalid_contract": int((~df["contract_type"].isin(VALID_CONTRACTS)).sum()),
     }
