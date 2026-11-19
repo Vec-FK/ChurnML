@@ -9,3 +9,4 @@
 - train-test-split : decoupage train/test reproductible (seed fixe, colonne cible churn) [@walidblack](https://github.com/walidblack)
 - model-training : entrainement d'un modele de classification (random forest ou regression logistique) [@laarw](https://github.com/laarw)
 - evaluation-metrics : evaluation du modele sur le jeu de test (accuracy, precision, recall, F1) [@chajdymountasser](https://github.com/chajdymountasser)
+- predict-cli : interface en ligne de commande qui charge un modele sauvegarde et predit le churn d'un CSV de clients (probabilite incluse) [@SalwaN23](https://github.com/SalwaN23)
