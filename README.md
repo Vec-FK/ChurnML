@@ -11,4 +11,4 @@
 - evaluation-metrics : evaluation du modele sur le jeu de test (accuracy, precision, recall, F1) [@chajdymountasser](https://github.com/chajdymountasser)
 - model-persistence : sauvegarde et rechargement du modele entraine avec joblib (save_model, load_model) [@chaimaafadilma-cyber](https://github.com/chaimaafadilma-cyber)
 - predict-cli : interface en ligne de commande qui charge un modele sauvegarde et predit le churn d'un CSV de clients (probabilite incluse) [@SalwaN23](https://github.com/SalwaN23)
-
+- churn-charts : visualisations du churn (taux par contrat, anciennete selon le churn) [@simomn22](https://github.com/simomn22)
