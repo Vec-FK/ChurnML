@@ -4,6 +4,12 @@ Toutes les modifications notables de ChurnML.
 
 Format inspiré de Keep a Changelog ; versionnage sémantique (SemVer).
 
+## [1.0.1] - 2026-11-26
+
+### Fixed
+
+- La CLI de prédiction accepte les CSV clients sans colonne `churn`.
+
 ## [1.0.0] - 2026-11-21
 
 ### Added
