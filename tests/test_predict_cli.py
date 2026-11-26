@@ -55,6 +55,33 @@ def test_main_writes_output_csv(trained_model, tmp_path):
     assert len(pd.read_csv(out_path)) == len(load_data(SAMPLE))
 
 
+def test_main_predicts_unlabeled_csv(trained_model, tmp_path):
+    model_path = tmp_path / "model.joblib"
+    input_path = tmp_path / "unlabeled.csv"
+    output_path = tmp_path / "predictions.csv"
+    save_model(trained_model, model_path)
+    load_data(SAMPLE).drop(columns=["churn"]).to_csv(input_path, index=False)
+
+    main(
+        [
+            "--model",
+            str(model_path),
+            "--input",
+            str(input_path),
+            "--output",
+            str(output_path),
+        ]
+    )
+
+    result = pd.read_csv(output_path)
+    assert len(result) == len(pd.read_csv(input_path))
+    assert list(result.columns) == [
+        "customer_id",
+        "churn_prediction",
+        "churn_probability",
+    ]
+
+
 def test_main_missing_model_raises(tmp_path):
     with pytest.raises(FileNotFoundError):
         main(["--model", str(tmp_path / "absent.joblib"), "--input", str(SAMPLE)])

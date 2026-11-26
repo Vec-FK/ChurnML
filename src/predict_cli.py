@@ -42,7 +42,7 @@ def main(argv=None):
     args = build_parser().parse_args(argv)
 
     model = load_model(args.model)
-    df = load_data(args.input)
+    df = load_data(args.input, require_target=False)
     result = predict(model, df)
 
     if args.output:

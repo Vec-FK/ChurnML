@@ -21,11 +21,12 @@ REQUIRED_COLUMNS = [
 ]
 
 
-def load_data(path):
+def load_data(path, require_target=True):
     """Charge le CSV clients dans un DataFrame pandas.
 
     - normalise les noms de colonnes (espaces et majuscules supprimes)
     - verifie que les colonnes obligatoires sont presentes
+    - exige churn uniquement si require_target vaut True
 
     Raises:
         FileNotFoundError: si le fichier n'existe pas.
@@ -38,7 +39,12 @@ def load_data(path):
     df = pd.read_csv(path)
     df.columns = [str(col).strip().lower() for col in df.columns]
 
-    missing = [col for col in REQUIRED_COLUMNS if col not in df.columns]
+    required_columns = (
+        REQUIRED_COLUMNS
+        if require_target
+        else [col for col in REQUIRED_COLUMNS if col != "churn"]
+    )
+    missing = [col for col in required_columns if col not in df.columns]
     if missing:
         raise ValueError(f"Colonnes manquantes dans le CSV : {missing}")
 
